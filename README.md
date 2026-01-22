@@ -15,3 +15,6 @@ Book has only first 11 chapters
 10.  11
 11.  others
 12.  others
+
+
+# Link to class repo https://github.com/Shakeri-Lab/deep-learning-student-materials/tree/main/Assignment_1
