@@ -70,7 +70,7 @@ def nll_binary(X: ndarray, w: ndarray, y: ndarray) -> float:
     z = Xaug @ w
 
     # sigmoid probabilities
-    p = 1 / (1 + np.exp(-z))
+    p = sigmoid(z)
 
     # negative log-likelihood (binary cross-entropy)
     nll = -np.sum(y * np.log(p) + (1 - y) * np.log(1 - p))
@@ -107,9 +107,7 @@ def nll_multiclass(X: ndarray, W: ndarray, Y_onehot: ndarray) -> float:
     Z = Xaug @ W
 
     # stable softmax: (n, k)
-    Z_shifted = Z - np.max(Z, axis=1, keepdims=True)
-    exp_Z = np.exp(Z_shifted)
-    P = exp_Z / np.sum(exp_Z, axis=1, keepdims=True)
+    P = softmax(Z)
 
     # multiclass negative log-likelihood (cross-entropy), summed over batch
     # pick log-prob of the true class via one-hot mask
