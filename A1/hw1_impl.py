@@ -103,7 +103,6 @@ def nll_multiclass(X: ndarray, W: ndarray, Y_onehot: ndarray) -> float:
     # Xaug[:, 0] is vector of 1s
     Xaug = np.concatenate((np.ones((n, 1)), X), axis=1)
     # TODO
-        # logits: (n, k)
     Z = Xaug @ W
 
     # stable softmax: (n, k)
