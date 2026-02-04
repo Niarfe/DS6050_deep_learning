@@ -73,7 +73,7 @@ def nll_binary(X: ndarray, w: ndarray, y: ndarray) -> float:
     p = sigmoid(z)
 
     # negative log-likelihood (binary cross-entropy)
-    nll = -np.sum(y * np.log(p) + (1 - y) * np.log(1 - p))
+    nll = -np.mean(y * np.log(p) + (1 - y) * np.log(1 - p))
 
     return nll
 
@@ -111,7 +111,8 @@ def nll_multiclass(X: ndarray, W: ndarray, Y_onehot: ndarray) -> float:
 
     # multiclass negative log-likelihood (cross-entropy), summed over batch
     # pick log-prob of the true class via one-hot mask
-    nll = -np.sum(Y_onehot * np.log(P))
+    #nll = -np.sum(Y_onehot * np.log(P))
+    nll = -np.mean(np.sum(Y_onehot * np.log(P), axis=1))
 
     return nll
 
