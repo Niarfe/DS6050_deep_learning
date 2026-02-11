@@ -1,6 +1,6 @@
 # Summary of D2L Readings: 5.6; 7; 8.1; 14.1
 
-This set of readings moves from regularization, to deep convolutional scaling, to sequence modeling, and finally to attention mechanisms. Together, they trace the structural evolution of modern deep learning architectures.
+This module traces the structural evolution of deep learning: from regularization, to deep convolutional scaling, to sequence modeling, and finally to attention-based routing.
 
 ---
 
@@ -9,77 +9,77 @@ This set of readings moves from regularization, to deep convolutional scaling, t
 Dropout is a regularization technique based on stochastic thinning.
 
 During training:
-- Randomly zero out a fraction of hidden activations with probability $begin:math:text$ 1 \- p $end:math:text$.
-- This prevents neurons from co-adapting.
+- Randomly zero out hidden activations with probability $(1 - p)$.
+- Prevent neurons from co-adapting.
 
 During inference:
 - Use the full network.
 - Scale activations appropriately (or use inverted dropout during training).
 
-Conceptually:
-Dropout injects multiplicative noise into hidden representations. This forces robustness and effectively approximates training an ensemble of many thinned networks that share parameters.
+Conceptually, dropout injects multiplicative noise into hidden representations. It behaves like training an ensemble of many thinned networks that share parameters.
 
-Structural role:
-Dropout combats overfitting by increasing redundancy and discouraging brittle internal dependencies.
+Structural role:  
+Dropout increases robustness and reduces overfitting.
 
 ---
 
 ## Chapter 7 — Modern Convolutional Neural Networks
 
-This chapter traces architectural progress from early CNNs to deep residual networks.
+This chapter tracks the progression from early CNNs (LeNet, AlexNet) to deep architectures like ResNet.
 
-Key evolutionary themes:
+Key themes:
 
 1. Increasing depth improves representational capacity.
-2. Normalization techniques stabilize training.
-3. Residual connections enable very deep networks.
+2. Normalization stabilizes training.
+3. Residual connections make extreme depth trainable.
 
 ### Residual Networks (ResNet)
 
-Instead of directly learning $begin:math:text$ H\(x\) $end:math:text$, a residual block learns:
+Instead of directly learning $H(x)$, a residual block learns:
 
-$begin:math:display$
-F\(x\) \= H\(x\) \- x
-$end:math:display$
+$$
+F(x) = H(x) - x
+$$
 
 The block outputs:
 
-$begin:math:display$
-x \+ F\(x\)
-$end:math:display$
+$$
+x + F(x)
+$$
 
-This skip connection:
-- Allows gradients to flow directly.
-- Reduces vanishing gradient problems.
-- Prevents degradation when depth increases.
+The skip connection:
+- Improves gradient flow
+- Reduces vanishing gradients
+- Prevents degradation as depth increases
 
-Core insight:
-Depth becomes refinement rather than full transformation. Networks learn corrections to identity mappings.
+Core idea:  
+Depth becomes refinement of identity rather than full transformation.
 
 ---
 
 ## 8.1 — Recurrent Neural Networks (RNNs)
 
-RNNs introduce sequence modeling.
+RNNs introduce sequence modeling through a hidden state.
 
-Hidden state update:
+State update:
 
-$begin:math:display$
-h\_t \= f\(x\_t\, h\_\{t\-1\}\)
-$end:math:display$
+$$
+h_t = f(x_t, h_{t-1})
+$$
 
 Key properties:
-- Parameters are shared across time.
-- The network maintains memory.
-- Backpropagation through time (BPTT) is required.
 
-Important insight:
-An unrolled RNN is effectively a very deep network whose depth equals sequence length.
+- Parameters shared across time
+- Maintains memory
+- Requires backpropagation through time (BPTT)
+
+Structural insight:  
+An unrolled RNN is effectively a deep network whose depth equals sequence length.
 
 This explains:
-- Vanishing gradients.
-- Exploding gradients.
-- Difficulty modeling long-range dependencies.
+- Vanishing gradients
+- Exploding gradients
+- Long-range dependency difficulty
 
 RNNs introduce temporal inductive bias but suffer from memory bottlenecks.
 
@@ -87,9 +87,9 @@ RNNs introduce temporal inductive bias but suffer from memory bottlenecks.
 
 ## 14.1 — Attention Mechanisms
 
-Attention addresses the fixed-memory limitation of RNNs.
+Attention removes the fixed-memory limitation of RNNs.
 
-Instead of compressing all information into a single hidden state, attention computes a weighted combination of relevant inputs.
+Instead of compressing all information into a single hidden state, attention computes a weighted combination of inputs.
 
 Core components:
 - Query (Q)
@@ -98,41 +98,34 @@ Core components:
 
 Attention computation:
 
-$begin:math:display$
-\\text\{softmax\}\\left\(\\frac\{QK\^T\}\{\\sqrt\{d\}\}\\right\)V
-$end:math:display$
+$$
+\text{softmax}\left(\frac{QK^T}{\sqrt{d}}\right)V
+$$
 
 What changes:
-- The model selectively focuses on relevant parts of the input.
-- Long-range dependencies become easier to model.
-- Information routing becomes dynamic rather than sequential.
 
-Attention removes the bottleneck imposed by fixed hidden-state compression and forms the basis of Transformer architectures.
+- The model dynamically focuses on relevant inputs
+- Long-range dependencies become easier
+- Information routing becomes direct rather than sequential
 
----
-
-## Structural Arc Across the Readings
-
-These chapters form a progression:
-
-- Dropout → robustness through stochastic regularization.
-- Modern CNNs → scaling depth safely with residual learning.
-- RNNs → modeling sequences via recurrence.
-- Attention → replacing recurrence with dynamic information routing.
-
-Each innovation addresses a specific limitation:
-
-- Overfitting.
-- Vanishing gradients with depth.
-- Memory constraints in sequential models.
-- Long-range dependency bottlenecks.
-
-Viewed structurally, architectural advances are gradient-routing improvements.
+Attention forms the foundation of Transformer architectures.
 
 ---
 
-## Compressed Summary
+## Structural Arc
 
-This module traces the evolution from stabilizing feedforward networks, to enabling deep convolutional scaling, to modeling temporal dependence with recurrence, and finally to eliminating recurrence bottlenecks using attention.
+The progression across the readings:
 
-Modern deep learning emerges from systematically removing structural pathologies in optimization, depth, and memory.
+- Dropout → robustness  
+- Deep CNNs → scalable depth  
+- RNNs → temporal modeling  
+- Attention → dynamic routing  
+
+Each innovation removes a structural limitation:
+
+- Overfitting  
+- Vanishing gradients  
+- Sequential memory bottlenecks  
+- Long-range dependency constraints  
+
+Architectural evolution can be understood as progressively improving gradient routing and information flow.
