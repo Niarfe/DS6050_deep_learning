@@ -81,13 +81,13 @@ def problem_1_part_c(
     print('Categorical CE from sklearn:', nllmult_sklearn)
     print('Equal?', nllmult_scratch == nllmult_sklearn)
     print('Almost equal?', np.abs(nllmult_scratch - nllmult_sklearn) < atol)
-
-    # if outname is not None:
-        # dir_path = Path(__file__).resolve().parent
-        # answers = np.array([nllbin_scratch, nllmult_scratch])
-        # print(f'Generating answers file: "{outname}.npy"')
-        # np.save(f'{outname}.npy', answers)
-    print('--------------------------------------')
+    
+    if outname is not None:
+        dir_path = Path(__file__).resolve().parent
+        answers = np.array([nllbin_scratch, nllmult_scratch])
+        print(f'Generating answers file: "{outname}.npy"')
+        np.save(f'{outname}.npy', answers)
+        print('--------------------------------------')
 
 
 def problem_2(
@@ -465,11 +465,11 @@ def main() -> None:
 
     atol = 1e-10  ## catch slight numerical errors from implementations
 
-    problem_1_part_c(hw, outname, atol, seed)
+    #problem_1_part_c(hw, outname, atol, seed)
     problem_2(hw, seed)
-    problem_3_part_b(hw, seed)
-    problem_3_part_c(hw, seed)
-    problem_4(hw, seed)
+    #problem_3_part_b(hw, seed)
+    #problem_3_part_c(hw, seed)
+    #problem_4(hw, seed)
 
 
 if __name__ == '__main__':

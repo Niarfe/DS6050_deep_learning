@@ -152,21 +152,20 @@ def linreg_ne(
     Xaug = np.concatenate((np.ones((n, 1)), X), axis=1)
     t_start = time()
     # TODO: NE implementation
-        # Normal equations: W = (X^T X)^(-1) X^T Y
-    A = Xaug.T @ Xaug                # (d+1, d+1)
-    B = Xaug.T @ Y                   # (d+1, m)
+    # Xaug @ W = Y, where
+    # W[0, :] = B (bias) and W[1:, :] = Theta (weights)
+
+    XtX = Xaug.T @ Xaug            # (d+1, d+1)
+    XtY = Xaug.T @ Y               # (d+1, m)
 
     if lmbda is not None:
-        # Ridge: (X^T X + λI)W = X^T Y
-        # Common convention: do NOT regularize the bias term.
         R = np.eye(d + 1)
-        R[0, 0] = 0.0
-        A = A + lmbda * R
+        R[0, 0] = 0.0              # do not regularize bias B
+        XtX = XtX + lmbda * R
 
-    # Solve linear system (more stable than explicit inverse)
-    W = np.linalg.solve(A, B)
+    W = np.linalg.solve(XtX, XtY)  # W = [B; Theta]
+
     t_end = time()
-    # return ?, t_end - t_start
     return W, t_end - t_start
 
 
@@ -212,22 +211,43 @@ def linreg_gd(
     W = np.zeros((d+1, m))
     t_start = time()
     # TODO: GD implementation
+    # W = [B; Theta], with B = W[0, :] and Theta = W[1:, :]
+
     for i in range(n_iters):
-        # predictions and residuals
-        Yhat = Xaug @ W                 # (n, m)
-        R = Yhat - Y                    # (n, m)
+        # Predictions: Yhat = X @ Theta + B  ==  Xaug @ W
+        Yhat = Xaug @ W                              # (n, m)
 
-        # gradient of MSE mean: (1/n) X^T (Yhat - Y)
-        grad = (Xaug.T @ R) / n         # (d+1, m)
+        # Residuals: E = Yhat - Y
+        E = Yhat - Y                                 # (n, m)
 
-        # gradient step
-        W = W - lr * grad
+        # Gradient of (1/n) * ||E||^2 wrt W: dW = (2/n) * Xaug^T @ E
+        dW = (2.0 / n) * (Xaug.T @ E)                 # (d+1, m)
 
-        # store after i-th step
+        # Gradient step
+        W = W - lr * dW
+
+        # Store parameters after i-th gradient step
         Ws[i] = W
+
     t_end = time()
-    # return ?,  t_end - t_start
     return Ws, t_end - t_start
+
+#    for i in range(n_iters):
+#        # predictions and residuals
+#        Yhat = Xaug @ W                 # (n, m)
+#        R = Yhat - Y                    # (n, m)
+#
+#        # gradient of MSE mean: (1/n) X^T (Yhat - Y)
+#        grad = (Xaug.T @ R) / n         # (d+1, m)
+#
+#        # gradient step
+#        W = W - lr * grad
+#
+#        # store after i-th step
+#        Ws[i] = W
+#    t_end = time()
+#    # return ?,  t_end - t_start
+#    return Ws, t_end - t_start
 
 
 def MSE(Y: ndarray, Yhat: ndarray) -> float:

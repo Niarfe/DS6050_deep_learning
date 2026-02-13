@@ -1,0 +1,30 @@
+----------    Problem 2     ----------
+
+Full rank X...
+  Num. Features: 10
+  Num. Features: 25
+  Num. Features: 50
+  Num. Features: 75
+  Num. Features: 100
+  Num. Features: 250
+  Num. Features: 500
+  Num. Features: 750
+  Num. Features: 1000
+Saving rvf_fullrank.png
+Saving ivm_fullrank_fullscale.png
+Saving ivm_fullrank_zoomed.png
+
+Near singular X...
+  Num. Features: 10
+  Num. Features: 25
+  Num. Features: 50
+  Num. Features: 75
+  Num. Features: 100
+  Num. Features: 250
+  Num. Features: 500
+  Num. Features: 750
+  Num. Features: 1000
+Saving rvf_singular.png
+Saving ivm_singular_fullscale.png
+Saving ivm_singular_zoomed.png
+--------------------------------------
